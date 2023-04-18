@@ -1,0 +1,54 @@
+.modelHead{
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+   
+}
+.modelcont{
+    width:500px;
+    padding: 15px;
+    height:auto;
+    background-color: #9193ce;
+    border-radius: 15px;
+    display :flex;
+    flex-direction: column;
+   
+}
+.addUserText{
+    margin-top: 10px;
+    font-size: 30px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-around;
+}
+.nameFlex{
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.input{
+    width:50%;
+    border: 1px solid black;
+    border-radius: 5px;
+    height:30px
+}
+.nameText{
+    font-size: 24px;
+
+}
+.addUserButton{
+    font-size: 20px;
+    margin-top: 3px;
+    margin-bottom: 25px;
+    display: flex;
+    height: 35px;
+    cursor: pointer;
+    display: flex;
+    border-radius: 15px;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: none;
+    background-color: #DF44C9;
+}
