@@ -9,7 +9,7 @@ function QuestionDetails({
   show,
   handleClosed,
   data,
-  commonQues,
+
   setData,
   mode,
 }) {

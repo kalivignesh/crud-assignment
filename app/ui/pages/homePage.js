@@ -1,59 +1,58 @@
-import React, { useEffect, useState } from "react";
-import "../styles/home.css";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import QuestionDetails from "./addUser";
-import { TableContainer } from "../styles/index.styled";
+import React, { useEffect, useState } from 'react';
+import '../styles/home.css';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import QuestionDetails from './addOrEditUser';
+import { TableContainer } from '../styles/index.styled';
 import {
   useTable,
   usePagination,
   useGlobalFilter,
   useSortBy,
-} from "react-table";
-import makeGetRequest from "../api/getApi";
+} from 'react-table';
+import makeGetRequest from '../api/getApi';
 
-function 
-HomePage() {
+function HomePage() {
   const [open, setOpen] = useState(false);
   const [fetchValue, setFetchValue] = useState([]);
   const [data, setData1] = useState([]);
-  const [mode, setMode] = useState("add");
+  const [mode, setMode] = useState('add');
   const initialvalues = {
-    name: "",
-    email: "",
-    contactNo: "",
-    location: "",
-    id: "0",
+    name: '',
+    email: '',
+    contactNo: '',
+    location: '',
+    id: '0',
   };
   useEffect(() => {
     api();
   }, [open]);
   const api = async () => {
-    const result = await makeGetRequest("GET", `/user/api`, {});
+    const result = await makeGetRequest('GET', `/user/api`, {});
     setData1(result.users);
   };
 
   const [data1, setData] = useState(initialvalues);
   const [columns, setColumns] = useState([
-    { Header: "id", accessor: "id" },
-    { Header: "Name", accessor: "name" },
-    { Header: "Email", accessor: "email" },
-    { Header: "Contact", accessor: "contactNo" },
-    { Header: "Location", accessor: "location" },
+    { Header: 'id', accessor: 'id' },
+    { Header: 'Name', accessor: 'name' },
+    { Header: 'Email', accessor: 'email' },
+    { Header: 'Contact', accessor: 'contactNo' },
+    { Header: 'Location', accessor: 'location' },
     {
-      Header: "Edit",
+      Header: 'Edit',
       disableGlobalFilter: true,
       disableSortBy: true,
       Cell: ({ value, row }) => {
         return (
           <EditIcon
-            style={{ cursor: "pointer" }}
-            onClick={(e) => {
+            style={{ cursor: 'pointer' }}
+            onClick={e => {
               setData({ ...row.values });
-              setMode("edit");
+              setMode('edit');
               setOpen(true);
             }}
           />
@@ -61,14 +60,14 @@ HomePage() {
       },
     },
     {
-      Header: "Delete",
+      Header: 'Delete',
       disableGlobalFilter: true,
       Cell: ({ value, row }) => {
         return (
           <DeleteIcon
-            style={{ cursor: "pointer" }}
-            onClick={async (e) => {
-              await makeGetRequest("DELETE", `/delete/${row.values.id}`, {
+            style={{ cursor: 'pointer' }}
+            onClick={async e => {
+              await makeGetRequest('DELETE', `/delete/${row.values.id}`, {
                 name: data.name,
                 email: data.email,
 
@@ -82,23 +81,13 @@ HomePage() {
       },
     },
   ]);
-  const Header = [
-    "Name",
-    "Email",
-    "Employee id",
-    "Contact no",
-    "Role",
-    "Blood grp",
-    "",
-    "",
-  ];
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
     page,
-    rows,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -106,11 +95,10 @@ HomePage() {
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
     state,
     setGlobalFilter,
     // Get the state from the instance
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = useTable(
     {
       data,
@@ -121,22 +109,13 @@ HomePage() {
     },
     useGlobalFilter,
     useSortBy,
-    usePagination
+    usePagination,
   );
   const { globalFilter } = state;
   const handleClosed = () => {
     setOpen(false);
   };
-  const editFunction = (item) => {
-    setData({
-      ...data,
-      ["name"]: item.name,
-      ["email"]: item.email,
-      ["contactNo"]: item.contactNo,
-      ["location"]: item.location,
-    });
-    setOpen(true);
-  };
+
   return (
     <div className="container">
       <div className="dashBoardContainer">
@@ -146,25 +125,25 @@ HomePage() {
       <div>
         <div className="employeeDetailsCont">EMPLOYEE DETAILS</div>
       </div>
-      
+
       <div className="searchContainer">
         <input
           className="inputCont"
           placeholder="Search"
-          value={globalFilter || ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
+          value={globalFilter || ''}
+          onChange={e => setGlobalFilter(e.target.value)}
         />
         <div
           className="addUserButton1"
           onClick={() => {
             setData({
               ...data,
-              ["name"]: "",
-              ["email"]: "",
-              ["contactNo"]: "",
-              ["location"]: "",
+              ['name']: '',
+              ['email']: '',
+              ['contactNo']: '',
+              ['location']: '',
             });
-            setMode("add");
+            setMode('add');
             setOpen(true);
           }}
         >
@@ -174,13 +153,13 @@ HomePage() {
       <TableContainer>
         <table {...getTableProps()}>
           <thead>
-            {headerGroups.map((headerGroup) => (
+            {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
+                {headerGroup.headers.map(column => (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render("Header")}
+                    {column.render('Header')}
 
-                    {column.Header != "Edit" && column.Header != "Delete" && (
+                    {column.Header != 'Edit' && column.Header != 'Delete' && (
                       <span className="sortbutton">
                         {column.isSortedDesc ? (
                           <ArrowUpwardIcon />
@@ -195,12 +174,12 @@ HomePage() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map(row => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  {row.cells.map(cell => (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   ))}
                 </tr>
               );
@@ -208,27 +187,35 @@ HomePage() {
           </tbody>
         </table>
       </TableContainer>
-      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </button>{" "}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "}
-        <span>
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
-        </span>
-        
-      </div>
+      {pageOptions.length == 0 ? (
+        <div className="noUserFound">
+          <div>No Users Found</div>
+        </div>
+      ) : (
+        <div className="pagination">
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            {'<<'}
+          </button>{' '}
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {'<'}
+          </button>{' '}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {'>'}
+          </button>{' '}
+          <button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
+            {'>>'}
+          </button>{' '}
+          <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+          </span>
+        </div>
+      )}
       <QuestionDetails
         show={open}
         data={data1}

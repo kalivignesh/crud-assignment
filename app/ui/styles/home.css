@@ -119,3 +119,9 @@ margin-top: 25px;
     align-items: center;
     justify-content: center;
 }
+.noUserFound{
+    display :flex;
+    justify-content: center;
+    margin-top: 30px;
+    font-size: 20px;
+}
